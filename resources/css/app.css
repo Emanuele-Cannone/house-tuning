@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.collapse:not(.collapse-open):not(.collapse-close) > .collapse-title{
+    @apply cursor-context-menu;
+}
