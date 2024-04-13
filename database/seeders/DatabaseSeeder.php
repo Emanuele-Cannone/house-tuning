@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Vehicle;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +19,15 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $vehicles = collect([
+            'Auto',
+            'Moto',
+            'Trattori'
+        ]);
+
+        $vehicles->each(function ($item) {
+            Vehicle::create(['name' => $item]);
+        });
     }
 }
