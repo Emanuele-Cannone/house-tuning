@@ -23,7 +23,7 @@ class VehicleStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|unique'
+            'name' => 'required|string|unique:vehicles,name'
         ];
     }
 }

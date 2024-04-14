@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\VehicleException;
 use App\Http\Requests\VehicleStoreRequest;
 use App\Http\Requests\VehicleUpdateRequest;
 use App\Models\Vehicle;
+use App\Services\VehicleService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class VehicleController extends Controller
 {
+    public function __construct(private readonly VehicleService $service)
+    {
+    }
+
     /**
      * Display a listing of the resource.
+     * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Vehicle/Index', [
             'vehicles' => Vehicle::all(),
@@ -21,28 +30,32 @@ class VehicleController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @return Response
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Vehicle/Create');
     }
 
     /**
      * Store a newly created resource in storage.
+     * @param VehicleStoreRequest $request
+     * @return RedirectResponse
+     * @throws VehicleException
      */
-    public function store(VehicleStoreRequest $request)
+    public function store(VehicleStoreRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
+        $this->service->create($request);
 
-        Vehicle::create(collect($validated));
-
-        return to_route('Vehicle.Index');
+        return redirect()->route('vehicle.index');
     }
 
     /**
      * Show the form for editing the specified resource.
+     * @param Vehicle $vehicle
+     * @return Response
      */
-    public function edit(Vehicle $vehicle)
+    public function edit(Vehicle $vehicle): Response
     {
         return Inertia::render('Vehicle/Edit', [
             'vehicle' => $vehicle
@@ -51,14 +64,16 @@ class VehicleController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param VehicleUpdateRequest $request
+     * @param Vehicle $vehicle
+     * @return RedirectResponse
+     * @throws VehicleException
      */
-    public function update(VehicleUpdateRequest $request, Vehicle $vehicle)
+    public function update(VehicleUpdateRequest $request, Vehicle $vehicle): RedirectResponse
     {
-        $validated = $request->validated();
+        $this->service->update($request, $vehicle);
 
-        $vehicle->update($validated);
-
-        return to_route('Vehicle.Index');
+        return redirect()->route('vehicle.index');
 
     }
 
@@ -69,6 +84,7 @@ class VehicleController extends Controller
     {
         $vehicle->delete();
 
-        return to_route('Vehicle.Index');
+        return redirect()->route('vehicle.index');
+
     }
 }
