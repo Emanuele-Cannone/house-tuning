@@ -120,12 +120,12 @@ class DatabaseSeeder extends Seeder
             Vehicle::create(['name' => $item]);
         });
 
-        $brands->each(function ($item) {
-            VehicleBrand::create([
-                'vehicle_id' => $item['vehicle_id'],
-                'brand' => $item['brand'],
-                'name' => $item['name']
-            ]);
-        });
+        // $brands->each(function ($item) {
+        //     VehicleBrand::create([
+        //         'vehicle_id' => $item['vehicle_id'],
+        //         'brand' => $item['brand'],
+        //         'name' => $item['name']
+        //     ]);
+        // });
     }
 }

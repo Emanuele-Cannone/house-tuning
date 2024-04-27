@@ -26,6 +26,8 @@ class VehicleService {
 
             DB::commit();
 
+            session()->flash('success');
+
         } catch(Exception $e){
 
             DB::rollBack();
