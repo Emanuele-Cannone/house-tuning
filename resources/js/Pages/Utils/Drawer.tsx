@@ -5,7 +5,7 @@ import { Link } from '@inertiajs/react'
 function Drawer({auth}: PageProps) {
 
   return (
-    <div className="drawer">
+    <div className="drawer z-10">
     <input id="my-drawer" type="checkbox" className="drawer-toggle" />
     <div className="drawer-content">
         {/* Page content here */}
@@ -39,7 +39,7 @@ function Drawer({auth}: PageProps) {
                                         voice.action.map((elem, index) =>(
                                             
                                             <li key={index} className="menu-item text-xl font-medium">
-                                                <Link className='text-base cursor-pointer hover:font-semibold'href={BASE_URL + elem.link}>
+                                                <Link className='text-base cursor-pointer hover:font-semibold' href={BASE_URL + voice.link  + elem.link}>
                                                     {elem.label}
                                                 </Link>
                                             </li>
