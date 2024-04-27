@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Vehicle;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
@@ -22,10 +23,10 @@ class VehicleUpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
         return [
-            'name' => 'required|string|unique:vehicles,name'.$this->id
+            'name' => ['required','string',Rule::unique(Vehicle::class)->ignore($request->get('name'), 'name')]
         ];
     }
 }

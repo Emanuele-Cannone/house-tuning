@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('vehicle', \App\Http\Controllers\VehicleController::class);
+    Route::resource('brand', \App\Http\Controllers\VehicleBrandController::class);
 
 
 
