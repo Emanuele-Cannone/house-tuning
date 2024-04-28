@@ -5,11 +5,3 @@
 .collapse:not(.collapse-open):not(.collapse-close) > .collapse-title{
     @apply cursor-context-menu;
 }
-/* 
-.card.image-full:before {
-    z-index: 0 !important; 
-}
-
-.card.image-full > .card-body{
-    z-index: 0 !important;
-} */
