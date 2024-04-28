@@ -22,11 +22,10 @@ class VehicleService {
 
         try{
             DB::beginTransaction();
+
             Vehicle::create($validated);
 
             DB::commit();
-
-            session()->flash('success');
 
         } catch(Exception $e){
 
