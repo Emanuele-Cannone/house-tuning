@@ -1,3 +1,4 @@
+import { useForm } from '@inertiajs/react';
 import React, { useEffect, useRef, useState } from 'react'
 
 interface IModal {
@@ -6,9 +7,20 @@ interface IModal {
     description: any;
     confirm: () => void;
     cancel: () => void;
+    handleChangeValueForm: (e: any) => void;
 }
-function Modal({modalId, title, description, confirm, cancel}: Readonly<IModal>) {
+function Modal({modalId, title, description, confirm, cancel, handleChangeValueForm}: Readonly<IModal>) {
 
+    const {data, setData, post, errors} = useForm({
+        name: ''
+    })
+{/* <form><input type="text" name="name"  placeholder="Veicolo" className="input input-bordered w-full max-w-xs mt-4" /></form> */}
+    handleChangeValueForm = (e) => {
+        setData({
+           ...data,
+            [e.target.name]: e.target.value
+        })
+    }
   
   return (
    <>
@@ -20,7 +32,7 @@ function Modal({modalId, title, description, confirm, cancel}: Readonly<IModal>)
         <div className="modal-action">
         <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-success text-white mx-3">Conferma</button>
+            <button onClick={() => confirm} className="btn btn-success text-white mx-3">Conferma</button>
             <button onClick={() => cancel()} className="btn btn-error text-white">Annulla</button>
         </form>
         </div>

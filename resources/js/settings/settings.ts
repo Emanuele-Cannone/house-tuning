@@ -8,3 +8,7 @@ export const SIDEBAR_VOICES: {label: string, link: string, action: {label: strin
     { label: "Motori", link: "", action: [{label: "Aggiungi motore", link: ""}, {label: "Lista motori", link: ""}]  },
     { label: "ECU", link: "", action: [{label: "Aggiungi ECU", link: ""}, {label: "Lista ECU", link: ""}]  }
 ];
+
+export const DESCRIPTION_MODAL_KEY = {
+   update: "updateVheicle"
+}
