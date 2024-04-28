@@ -29,10 +29,7 @@ function Drawer({auth}: PageProps) {
                         <li key={index} className="menu-item text-xl font-medium">
                             <details open={false}>
                                 <summary>
-                                    <Link className='text-lg cursor-pointer hover:font-semibold'href={BASE_URL + voice.link}>
-                                    {voice.label}
-
-                                    </Link>
+                                    <p className='text-lg cursor-pointer hover:font-semibold'>{voice.label}</p>
                                 </summary>
                                 <ul>
                                     {
