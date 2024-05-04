@@ -1,9 +1,11 @@
-export const defineToastVisibility = (errors: any, setToast: any) => {
-    if(errors.name !== null) {
+export const defineToastVisibility = (response: any, setToast: any, color: string) => {
+    console.log(color);
+    
+    if(response !== null ) {
         setToast({
             isToastVisible: true,
-            color: 'error',
-            message: errors.name
+            color: color,
+            message: response
         })
         setTimeout(() => {
             setToast({
@@ -13,4 +15,5 @@ export const defineToastVisibility = (errors: any, setToast: any) => {
             })
         }, 3000)
     }
+
 }

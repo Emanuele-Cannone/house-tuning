@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react"
 
-
-
-function Toast({color, message, isToastVisible}: ToastProps) {
-
-    const [toastVisible, setToastVisible] = useState(false);
-
+function Toast({isToastVisible, color, message}: any) {
+    
+    console.log(color);
+    
+    
 
 return (
     isToastVisible &&  (

@@ -2,12 +2,14 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout"
 import {PageProps} from "@/types"
 import Drawer from "../Utils/Drawer"
 import {useEffect, useReducer, useState} from "react"
-import Modal from "../Utils/Modal"
-import { useForm, usePage } from "@inertiajs/react"
-import { DESCRIPTION_MODAL_KEY } from "@/settings/settings"
+import { usePage } from "@inertiajs/react"
+import ModalUpdate from "../Utils/ModalUpdateDelete"
+import Toast from "../Utils/Toast"
+import { defineToastVisibility } from "@/services/toastService"
 
 interface VehicleProps {
-    vehicles: any[]
+    vehicles: any[],
+    flash: any
 }
 
 type IndexProps = PageProps & VehicleProps & PropsErrors
@@ -27,50 +29,53 @@ function modalReducer(state: any, action: any) {
         ...state,
         idModal: "updateModal",
         title: "Modifica veicolo " + action.payload.name,
-        description: DESCRIPTION_MODAL_KEY,
-        confirmButton: (post: any, value: string, closeModal: () => void) =>  {
-          post(route('vehicle.create'));
-          closeModal();
-        }
+        idVehicle: action.payload.id,
+        isUpdate: true,
       };
       case "delete":
         return {
          ...state,
           idModal: "deleteModal",
           title: "Elimina veicolo " + action.payload.name,
-          description: <p>Sei sicuro di voler eliminare il veicolo {action.payload.name}?</p>,
+          idVehicle: action.payload.id,
+          isUpdate: false,
+          description: "Sei sicuro di voler eliminare il veicolo " + action.payload.name,
         };
         case "close":
             return {
                 ...state,
                 idModal: "",
-                description: <input/>,
+                description: null,
                 title: "",
             };
     }
     return state;
 }
 
-function Index({vehicles, auth}: Readonly<IndexProps>) {
+function Index({vehicles, auth, flash}: Readonly<IndexProps>) {
 
   const [page, setPage] = useState(0);
   const [records, setRecords] = useState(vehicles);
   const [valueSearch, setValueSearch] = useState("");
-
-  const {data, setData, post, errors} = useForm({
-    name: ''
+  const [toast, setToast] = useState({
+    isToastVisible: false,
+    color: '',
+    message: '',
 })
 
     const [modal, dispatch] = useReducer(modalReducer, modalInitialState)
-
-    const {flash} = usePage().props
-
 
     const setValuesTable = () => setRecords(vehicles.filter((el: any, index: number) => index < page * 10 + 10 && index >= page * 10))
 
     useEffect(() => {
         setValuesTable();
-    }, [page]);
+    }, [page, vehicles]);
+
+    useEffect(() => {
+      console.log(flash);
+      
+      defineToastVisibility(flash.message, setToast, "success") as any
+  }, [flash.message]);
 
 
     const onSearchVehicle = () => {
@@ -106,7 +111,7 @@ function Index({vehicles, auth}: Readonly<IndexProps>) {
             user={auth.user}
         >
             <Drawer auth={auth}/>
-            <div className="ml-10 w-11/12 m-auto">
+            <div className="w-11/12 m-auto">
         <div className="flex flex-wrap justify-between content-center">
           <div className="self-end flex">
             <label className="input w-80 input-bordered flex items-center gap-2">
@@ -148,18 +153,14 @@ function Index({vehicles, auth}: Readonly<IndexProps>) {
         </div>
         <div className="w-1/2 m-auto join grid grid-cols-2">
           <button className="join-item btn btn-outline btn-info" onClick={() => page > 0 && setPage(page - 1)}>Previous page</button>
-          <button className="join-item btn btn-outline btn-success" onClick={() => setPage(page + 1)}>Next</button>
+          <button className="join-item btn btn-outline btn-success" onClick={() => page < vehicles.length / 10 - 1 && setPage(page + 1)}>Next</button>
         </div>
-
-        {/* @ts-ignore */}
-        {flash.message && (
-            //@ts-ignore
-            <div className="alert">{flash.message}</div>
-        )}
-
       </div>
 
-      {/* <Modal modalId={modal.idModal} description={modal.description} title={modal.title} confirm={() => modal.confirmButton(post, )} cancel={() => closeModal()} /> */}
+      <ModalUpdate modalId={modal.idModal} description={modal.description} title={modal.title} cancel={() => closeModal()} idVehicle={modal.idVehicle} setValuesTable={() => setValuesTable()}  isUpdate={modal.isUpdate}/>
+    
+      <Toast color={toast.color} message={toast.message} isToastVisible={toast.isToastVisible}/>
+
     </AuthenticatedLayout>
 
     )
