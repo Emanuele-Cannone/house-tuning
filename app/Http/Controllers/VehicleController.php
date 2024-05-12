@@ -46,11 +46,9 @@ class VehicleController extends Controller
      */
     public function store(VehicleStoreRequest $request): RedirectResponse
     {
+        $this->service->create($request);
 
-        throw new VehicleException();
-//        $this->service->create($request);
-
-        return redirect()->route('vehicle.index');
+        return redirect()->route('vehicle.index')->with('message', 'Veicolo creato correttamente!');
     }
 
     /**
