@@ -47,7 +47,7 @@ class VehicleController extends Controller
     {
         $this->service->create($request);
 
-        return redirect()->route('vehicle.index')->with('message', 'Organization created.');
+        return redirect()->route('vehicle.index')->with('success', 'Veicolo creato correttamente!');
     }
 
     /**

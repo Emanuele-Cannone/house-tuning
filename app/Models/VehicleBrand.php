@@ -16,6 +16,7 @@ class VehicleBrand extends Model
      */
     protected $fillable = [
         'name',
+        'brand'
     ];
 
     /**
