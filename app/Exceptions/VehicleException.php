@@ -13,6 +13,6 @@ class VehicleException extends Exception
      */
     public function render(): RedirectResponse
     {
-        return Redirect::route('vehicle.create')->with('failed', 'Operazione Fallita!');
+        return Redirect::route('vehicle.create')->with('message', 'Operazione Fallita!');
     }
 }
