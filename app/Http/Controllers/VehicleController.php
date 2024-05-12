@@ -10,6 +10,7 @@ use App\Services\VehicleService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use function PHPUnit\Framework\throwException;
 
 class VehicleController extends Controller
 {
@@ -45,6 +46,8 @@ class VehicleController extends Controller
      */
     public function store(VehicleStoreRequest $request): RedirectResponse
     {
+
+        throwException(new VehicleException());
         $this->service->create($request);
 
         return redirect()->route('vehicle.index')->with('message', 'Veicolo creato correttamente!');
