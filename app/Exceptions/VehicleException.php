@@ -13,7 +13,6 @@ class VehicleException extends Exception
      */
     public function render(): RedirectResponse
     {
-        session()->flash('failed', 'Veicolo non creato/aggiornato');
-        return Redirect::route('vehicle.create');
+        return Redirect::route('vehicle.create')->with('failed', 'Operazione Fallita!');
     }
 }

@@ -79,8 +79,10 @@ class VehicleController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param Vehicle $vehicle
+     * @return RedirectResponse
      */
-    public function destroy(Vehicle $vehicle)
+    public function destroy(Vehicle $vehicle): RedirectResponse
     {
         $vehicle->delete();
 

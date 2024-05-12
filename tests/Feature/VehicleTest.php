@@ -54,6 +54,30 @@ test('exception on create duplicated vehicle', function () {
 
 });
 
+test('exception on create empty name vehicle', function () {
+
+    actingAs($this->user)
+        ->get('dashboard')
+        ->assertOk();
+
+    post(route('vehicle.store', [
+        'name' => 'TEST'
+    ]))
+        ->assertRedirect(route('vehicle.index'));
+
+    post(route('vehicle.store', [
+        'name' => ''
+    ]))
+        ->assertStatus(302)
+        ->withException(new VehicleException());
+
+    assertDatabaseCount('vehicles', 1);
+    assertDatabaseHas('vehicles', [
+        'name' => 'TEST'
+    ]);
+
+});
+
 test('edit vehicle', function () {
 
     actingAs($this->user)
@@ -121,6 +145,40 @@ test('exception on edit vehicle with existing item', function () {
 
     put(route('vehicle.update', [
         'name' => 'OTHER-TEST',
+        'vehicle' => \App\Models\Vehicle::where('name', 'TEST')->first()
+    ]))
+        ->assertStatus(302)
+        ->withException(new VehicleException());
+
+    assertDatabaseCount('vehicles', 2);
+
+    expect(\App\Models\Vehicle::where('name', 'TEST')->first())
+        ->toMatchArray(
+            [
+                'name' => 'TEST'
+            ]
+        );
+
+});
+
+test('exception on edit vehicle with empty item', function () {
+
+    actingAs($this->user)
+        ->get('dashboard')
+        ->assertOk();
+
+    post(route('vehicle.store', [
+        'name' => 'TEST'
+    ]))
+        ->assertRedirect(route('vehicle.index'));
+
+    post(route('vehicle.store', [
+        'name' => 'OTHER-TEST'
+    ]))
+        ->assertRedirect(route('vehicle.index'));
+
+    put(route('vehicle.update', [
+        'name' => '',
         'vehicle' => \App\Models\Vehicle::where('name', 'TEST')->first()
     ]))
         ->assertStatus(302)

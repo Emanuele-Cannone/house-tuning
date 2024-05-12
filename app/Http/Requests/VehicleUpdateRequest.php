@@ -21,12 +21,24 @@ class VehicleUpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @param Request $request
+     * @return array
      */
     public function rules(Request $request): array
     {
         return [
             'name' => ['required','string',Rule::unique(Vehicle::class)->ignore($request->get('name'), 'name')]
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function messages(): array
+    {
+        return [
+            'name.unique' => 'Nome veicolo già utilizzato!',
+            'name.required' => 'Nome veicolo necessario!',
         ];
     }
 }
