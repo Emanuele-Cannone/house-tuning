@@ -6,6 +6,7 @@ import { usePage } from "@inertiajs/react"
 import ModalUpdate from "../Utils/ModalUpdateDelete"
 import Toast from "../Utils/Toast"
 import { defineToastVisibility } from "@/services/toastService"
+import ModalUpdateDelete from "../Utils/ModalUpdateDelete"
 
 interface VehicleProps {
     vehicles: any[],
@@ -157,7 +158,7 @@ function Index({vehicles, auth, flash}: Readonly<IndexProps>) {
         </div>
       </div>
 
-      <ModalUpdate modalId={modal.idModal} description={modal.description} title={modal.title} cancel={() => closeModal()} idVehicle={modal.idVehicle} setValuesTable={() => setValuesTable()}  isUpdate={modal.isUpdate}/>
+      <ModalUpdateDelete modalId={modal.idModal} description={modal.description} title={modal.title} cancel={() => closeModal()} idVehicle={modal.idVehicle} setValuesTable={() => setValuesTable()}  isUpdate={modal.isUpdate}/>
     
       <Toast color={toast.color} message={toast.message} isToastVisible={toast.isToastVisible}/>
 
