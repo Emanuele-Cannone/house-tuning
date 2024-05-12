@@ -48,9 +48,9 @@ class VehicleController extends Controller
     {
 
         throwException(new VehicleException());
-        $this->service->create($request);
+//        $this->service->create($request);
 
-        return redirect()->route('vehicle.index')->with('message', 'Veicolo creato correttamente!');
+        return redirect()->route('vehicle.index');
     }
 
     /**
