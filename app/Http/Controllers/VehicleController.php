@@ -47,7 +47,7 @@ class VehicleController extends Controller
     public function store(VehicleStoreRequest $request): RedirectResponse
     {
 
-        throwException(new VehicleException());
+        throw new VehicleException();
 //        $this->service->create($request);
 
         return redirect()->route('vehicle.index');
