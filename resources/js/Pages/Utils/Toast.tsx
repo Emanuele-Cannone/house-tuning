@@ -1,8 +1,6 @@
 
 function Toast({isToastVisible, color, message}: any) {
     
-    console.log(color);
-    
     
 
 return (

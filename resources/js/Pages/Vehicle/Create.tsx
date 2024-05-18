@@ -18,7 +18,6 @@ function Create({auth}: PageProps & PropsErrors) {
 
     const {data, setData, post} = useForm({
         name: '',
-        test: '',
     })
 
     const addVehicle: FormEventHandler = (e) => {

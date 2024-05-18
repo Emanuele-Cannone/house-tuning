@@ -28,7 +28,10 @@ class VehicleBrandController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Brand/Create');
+        return Inertia::render('Brand/Create', [
+            'brands' => VehicleBrand::with('vehicle')->get(),
+            'vehicles' => Vehicle::all(),
+        ]);
     }
 
     /**
