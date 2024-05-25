@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\VehicleException;
+use App\Http\Requests\VehicleBrandStoreRequest;
 use App\Models\Vehicle;
 use App\Models\VehicleBrand;
+use App\Services\VehicleBrandService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -11,6 +15,11 @@ use Inertia\Response;
 
 class VehicleBrandController extends Controller
 {
+
+    public function __construct(private readonly VehicleBrandService $service)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -36,10 +45,15 @@ class VehicleBrandController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param VehicleBrandStoreRequest $request
+     * @return RedirectResponse
+     * @throws VehicleException
      */
-    public function store(Request $request)
+    public function store(VehicleBrandStoreRequest $request): RedirectResponse
     {
-        //
+        $this->service->create($request);
+
+        return redirect()->route('brand.index')->with('message', 'Brand creato correttamente!');
     }
 
     /**

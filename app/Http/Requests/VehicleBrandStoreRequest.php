@@ -24,7 +24,7 @@ class VehicleBrandStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'vehicle_id' => 'required|exists:vehicles,id',
+            'vehicle' => 'required|string',
             'brand' => ['require','string', Rule::unique('vehicle_brands')->where('name', $this->name)],
             'name' => ['require','string', Rule::unique('vehicle_brands')->where('brand', $this->brand)],
         ];

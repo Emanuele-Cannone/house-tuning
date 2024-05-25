@@ -15,6 +15,7 @@ class VehicleBrand extends Model
      * @var string[]
      */
     protected $fillable = [
+        'vehicle_id',
         'name',
         'brand'
     ];

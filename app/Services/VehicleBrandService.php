@@ -3,35 +3,45 @@
 namespace App\Services;
 
 use App\Exceptions\VehicleException;
+use App\Http\Requests\VehicleBrandStoreRequest;
 use App\Http\Requests\VehicleStoreRequest;
 use App\Http\Requests\VehicleUpdateRequest;
 use App\Models\Vehicle;
+use App\Models\VehicleBrand;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class VehicleService
+class VehicleBrandService
 {
 
     /**
-     * @param VehicleStoreRequest $request
+     * @param VehicleBrandStoreRequest $request
      * @throws VehicleException
      */
-    public function create(VehicleStoreRequest $request): void
+    public function create(VehicleBrandStoreRequest $request): void
     {
-        $validated = $request->validated();
+        $validated = collect($request->validated());
 
         try {
             DB::beginTransaction();
 
-            Vehicle::create($validated);
+            $vehicle = Vehicle::firstOrCreate([
+                'name' => $validated->get('vehicle')
+            ]);
+
+            VehicleBrand::create([
+                'vehicle_id' => $vehicle->id,
+                'brand' => $validated->get('brand'),
+                'name' => $validated->get('name')
+            ]);
 
             DB::commit();
 
         } catch (Exception $e) {
 
             DB::rollBack();
-            Log::error('Error on creation of vehicle', [$e->getMessage()]);
+            Log::error('Error on creation of brand', [$e->getMessage()]);
             throw new VehicleException();
         }
     }

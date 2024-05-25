@@ -13,8 +13,15 @@ use Tests\TestCase;
 | need to change it using the "uses()" function to bind a different classes or traits.
 |
 */
+uses(
+    Tests\TestCase::class,
+    Illuminate\Foundation\Testing\RefreshDatabase::class,
+)->in('Unit');
 
-uses(TestCase::class, RefreshDatabase::class)->in('Feature','Unit');
+uses(
+    Tests\TestCase::class,
+    Illuminate\Foundation\Testing\RefreshDatabase::class,
+)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
