@@ -10,7 +10,6 @@ use App\Services\VehicleService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
-use function PHPUnit\Framework\throwException;
 
 class VehicleController extends Controller
 {
@@ -82,10 +81,11 @@ class VehicleController extends Controller
      * Remove the specified resource from storage.
      * @param Vehicle $vehicle
      * @return RedirectResponse
+     * @throws VehicleException
      */
     public function destroy(Vehicle $vehicle): RedirectResponse
     {
-        $vehicle->delete();
+        $this->service->destroy($vehicle);
 
         return redirect()->route('vehicle.index');
 

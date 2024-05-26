@@ -29,7 +29,7 @@ class VehicleBrandService
             $vehicle = Vehicle::firstOrCreate([
                 'name' => $validated->get('vehicle')
             ]);
-            dd($vehicle);
+
             VehicleBrand::create([
                 'vehicle_id' => $vehicle->id,
                 'brand' => $validated->get('brand'),
