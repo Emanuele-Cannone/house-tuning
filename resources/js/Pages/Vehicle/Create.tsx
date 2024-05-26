@@ -21,9 +21,6 @@ function Create({auth}: PageProps & PropsErrors) {
     })
 
     const addVehicle: FormEventHandler = (e) => {
-        e.preventDefault()
-        post(route('vehicle.store'))
-
         e.preventDefault();
         post(
             route('vehicle.store'), {

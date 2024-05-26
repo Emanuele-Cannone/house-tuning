@@ -3,6 +3,7 @@ import React, { FormEventHandler, useState } from 'react'
 import Drawer from '../Utils/Drawer'
 import Toast from '../Utils/Toast'
 import { useForm } from '@inertiajs/react'
+import { defineToastVisibility } from '@/services/toastService'
 
 function Create({auth, vehicles, brands}: any) {
     const [toast, setToast] = useState({
@@ -16,25 +17,22 @@ function Create({auth, vehicles, brands}: any) {
 
 
     const {data, setData, post} = useForm({
-        veicolo: '1',
+        vehicle: '1',
         brand: '',
-        nome: ''
+        name: ''
     })
 
     const addBrand: FormEventHandler = (e) => {
-        e.preventDefault()
-        // post(route('vehicle.store'))
-
-        // e.preventDefault();
-        // post(
-        //     route('vehicle.store'), {
-        //         onError: (response: any) => defineToastVisibility(response.name, setToast, "error") as any,
-        //         onSuccess: (response: any) => {
-        //             console.log(response);
+        e.preventDefault();
+        post(
+            route('brand.store'), {
+                onError: (response: any) => defineToastVisibility(response.name, setToast, "error") as any,
+                onSuccess: (response: any) => {
+                    console.log(response);
                     
-        //             defineToastVisibility(response.props.flash.message, setToast, "success") as any
-        //         }
-        //     });
+                    defineToastVisibility(response.props.flash.message, setToast, "success") as any
+                }
+            });
 
         console.log(data);
         
@@ -56,14 +54,14 @@ function Create({auth, vehicles, brands}: any) {
                                 <label>Seleziona veicolo</label>
                                 <div className='flex flex-col lg:flex-row'>
 
-                                    <select disabled={isVehicleSelectVisible}  onChange={(e) => setData('veicolo', e.target.value)} className="select select-bordered w-full">
+                                    <select disabled={isVehicleSelectVisible}  onChange={(e) => setData('vehicle', e.target.value)} className="select select-bordered w-full">
                                         {
                                             vehicles.map((vehicle: any) => {
                                                 return <option key={vehicle.id} value={vehicle.id}>{vehicle.name}</option>
                                             })
                                         }
                                     </select>
-                                    <button type='button' disabled={isVehicleSelectVisible} className="btn btn-secondary" onClick={() => {setIsVehicleSelectVisible(true); setOldVehicle(data.veicolo); setData('veicolo', '')}}>Aggiungi nuovo veicolo</button>
+                                    <button type='button' disabled={isVehicleSelectVisible} className="btn btn-secondary" onClick={() => {setIsVehicleSelectVisible(true); setOldVehicle(data.vehicle); setData('vehicle', '')}}>Aggiungi nuovo veicolo</button>
 
                                 </div>
                                 { 
@@ -73,10 +71,10 @@ function Create({auth, vehicles, brands}: any) {
                                     <p className='mt-4 text-info'>Il veicolo sarà aggiunto assieme agli altri dati al click sul tasto "Salva"</p>
 
                                     <div className='flex items-center mb-5'>
-                                        <input name='veicolo' value={data.veicolo} type="text" placeholder="Veicolo"
+                                        <input name='veicolo' value={data.vehicle} type="text" placeholder="Veicolo"
                                             className="input input-bordered w-full"
-                                            onChange={(e) => setData('veicolo', e.target.value)}/>
-                                        <button type='button' className="btn btn-error text-white" onClick={() =>{ setIsVehicleSelectVisible(false); setData('veicolo', oldVehilce)}}>
+                                            onChange={(e) => setData('vehicle', e.target.value)}/>
+                                        <button type='button' className="btn btn-error text-white" onClick={() =>{ setIsVehicleSelectVisible(false); setData('vehicle', oldVehilce)}}>
                                             <span className="material-symbols-outlined">
                                                 close
                                             </span>
@@ -90,9 +88,9 @@ function Create({auth, vehicles, brands}: any) {
                                                 className="input input-bordered w-full my-2 lg:my-0"
                                                 onChange={(e) => setData('brand', e.target.value)}/>
 
-                                    <input name='nome' value={data.nome} type="text" placeholder="Nome"
+                                    <input name='name' value={data.name} type="text" placeholder="Nome"
                                     className="input input-bordered w-full my-2 lg:my-0"
-                                    onChange={(e) => setData('nome', e.target.value)}/>
+                                    onChange={(e) => setData('name', e.target.value)}/>
 
                                 </div>
                                
