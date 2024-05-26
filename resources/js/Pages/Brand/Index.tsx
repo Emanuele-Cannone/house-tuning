@@ -74,8 +74,13 @@ function Index({brands, vehicles, auth, flash}: Readonly<any>) {
   
       const onSearchVehicle = () => {
           if (valueSearch !== "") {
-              setRecords(brands.filter((el: any) => el.name.toUpperCase() === valueSearch.toUpperCase()));
-          } else {
+              // setRecords(brands.filter((el: any) => el.name.toUpperCase() === valueSearch.toUpperCase() ||  el.brand.toUpperCase() === valueSearch.toUpperCase() || el.vehicle.name.toUpperCase() === valueSearch.toUpperCase()));
+              setRecords(brands.filter((el: any) => el.name.toUpperCase().includes(valueSearch.toUpperCase()) ||  
+              el.brand.toUpperCase().includes(valueSearch.toUpperCase()) || 
+              el.vehicle.name.toUpperCase().includes(valueSearch.toUpperCase())));
+
+
+            } else {
               setValuesTable();
           }
       };

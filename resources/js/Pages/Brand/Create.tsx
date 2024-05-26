@@ -57,7 +57,7 @@ function Create({auth, vehicles, brands}: any) {
                                     <select disabled={isVehicleSelectVisible}  onChange={(e) => setData('vehicle', e.target.value)} className="select select-bordered w-full">
                                         {
                                             vehicles.map((vehicle: any) => {
-                                                return <option key={vehicle.id} value={vehicle.id}>{vehicle.name}</option>
+                                                return <option key={vehicle.id} value={vehicle.name}>{vehicle.name}</option>
                                             })
                                         }
                                     </select>

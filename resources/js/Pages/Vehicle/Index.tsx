@@ -81,7 +81,7 @@ function Index({vehicles, auth, flash}: Readonly<IndexProps>) {
 
     const onSearchVehicle = () => {
         if (valueSearch !== "") {
-            setRecords(vehicles.filter((el: any) => el.name.toUpperCase() === valueSearch.toUpperCase()));
+            setRecords(vehicles.filter((el: any) => el.name.toUpperCase().includes(valueSearch.toUpperCase())));
         } else {
             setValuesTable();
         }
